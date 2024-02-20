@@ -1,10 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import {styles} from './style'; // Ajusta la ruta según la ubicación de tu archivo de estilos
+//import {useNavigation} from '@react-navigation/native';
+import {styles} from './style';
 
-const HomeScreen = ({navigation}: any) => {
+interface Pokemon {
+  name: string;
+}
+
+const HomeScreen = () => {
+  //const navigation = useNavigation();
   const [generation, setGeneration] = useState<number>(1);
-  const [pokemonList, setPokemonList] = useState<any[]>([]);
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 
   useEffect(() => {
     let offset = 0;
@@ -27,77 +33,43 @@ const HomeScreen = ({navigation}: any) => {
     fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
       .then(response => response.json())
       .then(data => setPokemonList(data.results))
-      .catch(error => console.log(error));
+      .catch(error => console.error('Error fetching Pokemon:', error));
   }, [generation]);
 
   const handleGenerationChange = (gen: number) => {
     setGeneration(gen);
   };
 
-  const handlePokemonPress = (pokemon: any) => {
-    // Navega a la vista de detalles del Pokémon
-    navigation.navigate('PokemonsDetails', {pokemon});
+  const handlePokemonPress = () => {
+    //navigation.navigate('PokemonsDetails', {pokemonName: pokemon.name} as never);
   };
+
+  // Memoize pokemonList for efficiency
+  const memoizedPokemonList = useMemo(() => pokemonList, [pokemonList]);
 
   return (
     <View style={styles.container}>
       <View style={styles.generationSelector}>
-        <TouchableOpacity onPress={() => handleGenerationChange(1)}>
-          <Text
-            style={
-              generation === 1
-                ? styles.selectedGenerationText
-                : styles.generationText
-            }>
-            Gen 1
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleGenerationChange(2)}>
-          <Text
-            style={
-              generation === 2
-                ? styles.selectedGenerationText
-                : styles.generationText
-            }>
-            Gen 2
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleGenerationChange(3)}>
-          <Text
-            style={
-              generation === 3
-                ? styles.selectedGenerationText
-                : styles.generationText
-            }>
-            Gen 3
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleGenerationChange(4)}>
-          <Text
-            style={
-              generation === 4
-                ? styles.selectedGenerationText
-                : styles.generationText
-            }>
-            Gen 4
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleGenerationChange(5)}>
-          <Text
-            style={
-              generation === 5
-                ? styles.selectedGenerationText
-                : styles.generationText
-            }>
-            Gen 5
-          </Text>
-        </TouchableOpacity>
+        {[1, 2, 3, 4, 5].map(gen => (
+          <TouchableOpacity
+            key={gen}
+            onPress={() => handleGenerationChange(gen)}>
+            <Text
+              style={
+                generation === gen
+                  ? styles.selectedGenerationText
+                  : styles.generationText
+              }>
+              Gen {gen}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
       <FlatList
-        data={pokemonList}
+        data={memoizedPokemonList}
         keyExtractor={item => item.name}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => handlePokemonPress(item)}>
+          <TouchableOpacity onPress={() => handlePokemonPress()}>
             <View style={styles.cardContainer}>
               <Image
                 source={{
