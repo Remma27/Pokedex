@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import {
@@ -8,12 +9,15 @@ import {
   Image,
   ActivityIndicator,
   StyleSheet,
+  StyleProp,
+  ImageStyle,
 } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 
 import {styles} from './style';
 import {styles2} from './style2';
+import {ScrollView} from 'react-native';
 
 interface Pokemon {
   name: string;
@@ -78,6 +82,10 @@ function Home() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.logoPokemon}>
+        <Image source={require('./img/logoPM.png')} />
+      </View>
+
       <View style={styles.generationSelector}>
         {[1, 2, 3, 4, 5].map(gen => (
           <TouchableOpacity
@@ -104,9 +112,9 @@ function Home() {
                 source={{
                   uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`,
                 }}
-                style={styles.pokemonImage}
+                style={styles.pokemonImage as StyleProp<ImageStyle>}
               />
-              <Text>{item.name}</Text>
+              <Text style={styles.pokemonName}>{item.name}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -153,59 +161,68 @@ function Details({route, navigation}: {route: any; navigation: any}) {
   }, [route.params?.pokemonName]);
 
   return (
-    <View style={styles2.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : pokemonDetails ? (
-        <View style={styles2.detailsContainer}>
-          <Text>Pokemon Information</Text>
-          <View style={styles2.cardDetails}>
-            <Image
-              source={{
-                uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${pokemonDetails.name}.png`,
-              }}
-              style={styles2.pokemonImage2}
-            />
-            <Text style={styles2.sectionTitle}>{` ${
-              pokemonDetails.name || 'Not available'
-            }`}</Text>
-            <Text>Features:</Text>
-            <Text style={styles2.detailsText}>{`Code: ${
-              pokemonDetails.id || 'Not available'
-            }`}</Text>
-            <Text style={styles2.detailsText}>{`Height: ${
-              pokemonDetails.height || 'Not available'
-            }`}</Text>
-            <Text style={styles2.detailsText}>{`Weight: ${
-              pokemonDetails.weight || 'Not available'
-            }`}</Text>
-          </View>
-
-          <View>
-            <View style={styles2.types}>
-              <Text style={styles2.sectionTitle}>Types to Belong</Text>
-            </View>
-            <Text style={styles2.detailsText}>{`Type: ${
-              pokemonDetails.types
-                ? pokemonDetails.types.map(type => type.type.name).join(', ')
-                : 'Not available'
-            }`}</Text>
-          </View>
-          <View>
-            <View style={styles2.moves}>
-              <Text style={styles2.sectionTitle}>Moves</Text>
-            </View>
-            <Text style={styles2.detailsText}>{`Moves: ${
-              pokemonDetails.moves
-                ? pokemonDetails.moves.map(move => move.move.name).join(', ')
-                : 'Not available'
-            }`}</Text>
-          </View>
+    <ScrollView style={{flex: 1}}>
+      <View style={styles2.container}>
+        <View style={styles2.logoPokemon}>
+          <Image source={require('./img/logoPM.png')} />
         </View>
-      ) : (
-        <Text>No details found for the selected Pokémon.</Text>
-      )}
-    </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : pokemonDetails ? (
+          <View style={styles2.detailsContainer}>
+            <View style={styles2.TitleCard}>
+              <Text style={styles2.Title}>Pokemon Information</Text>
+            </View>
+            <View style={styles2.cardDetails}>
+              <Image
+                source={{
+                  uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${pokemonDetails.name}.png`,
+                }}
+                style={styles2.pokemonImage2 as StyleProp<ImageStyle>}
+              />
+              <View style={styles2.texts}>
+                <Text style={styles2.sectionTitle}>{` ${
+                  pokemonDetails.name || 'Not available'
+                }`}</Text>
+                <Text style={styles2.detailsText}>Features:</Text>
+                <Text style={styles2.detailsText}>{`Code: ${
+                  pokemonDetails.id || 'Not available'
+                }`}</Text>
+                <Text style={styles2.detailsText}>{`Height: ${
+                  pokemonDetails.height || 'Not available'
+                }`}</Text>
+                <Text style={styles2.detailsText}>{`Weight: ${
+                  pokemonDetails.weight || 'Not available'
+                }`}</Text>
+              </View>
+            </View>
+
+            <View>
+              <View style={styles2.types}>
+                <Text style={styles2.sectionTitle}>Types to Belong</Text>
+              </View>
+              <Text style={styles2.detailsText}>{`${
+                pokemonDetails.types
+                  ? pokemonDetails.types.map(type => type.type.name).join(', ')
+                  : 'Not available'
+              }`}</Text>
+            </View>
+            <View>
+              <View style={styles2.moves}>
+                <Text style={styles2.sectionTitle}>Moves</Text>
+              </View>
+              <Text style={styles2.detailsText}>{`${
+                pokemonDetails.moves
+                  ? pokemonDetails.moves.map(move => move.move.name).join(', ')
+                  : 'Not available'
+              }`}</Text>
+            </View>
+          </View>
+        ) : (
+          <Text>No details found for the selected Pokémon.</Text>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -222,7 +239,7 @@ function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerTintColor: '#000000', // Modified color to black
+          headerTintColor: '#000000',
         }}>
         <Stack.Screen
           name="Home"

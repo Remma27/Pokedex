@@ -5,14 +5,17 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'right',
+        justifyContent: 'space-around',
+        width: '100%',
+        backgroundColor: '#fff',
     },
     generationSelector: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         margin: 10,
         padding: 10,
+        backgroundColor: 'white',
     },
     generationText: {
         fontSize: 18,
@@ -21,27 +24,29 @@ export const styles = StyleSheet.create({
     },
     selectedGenerationText: {
         fontSize: 18,
-        color: 'blue',
+        color: '#365DAA',
         fontWeight: 'bold',
-        padding: 20,
+        padding: 10,
     },
     cardContainer: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        padding: 20,
-        marginVertical: 10,
+        backgroundColor: '#DCDDEF',
+        borderRadius: 30,
+        margin: 5,
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
     },
     pokemonImage: {
-        width: 90,
-        height: 90,
+        width: 120,
+        height: 120,
         marginRight: 15,
     },
     pokemonName: {
-        fontSize: 50,
         textAlign: 'center',
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        color: '#333',
     },
     detailsContainer: {
         alignItems: 'center',
@@ -69,5 +74,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         backgroundColor: 'yellow',
+    },
+    logoPokemon: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        resizeMode: 'contain',
+        marginTop: 20,
     },
 });
