@@ -1,118 +1,117 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useState, useEffect} from 'react';
+import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
+import {styles} from './style'; // Ajusta la ruta según la ubicación de tu archivo de estilos
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const HomeScreen = ({navigation}: any) => {
+  const [generation, setGeneration] = useState<number>(1);
+  const [pokemonList, setPokemonList] = useState<any[]>([]);
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  useEffect(() => {
+    let offset = 0;
+    let limit = 151;
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+    if (generation === 2) {
+      offset = 151;
+      limit = 100;
+    } else if (generation === 3) {
+      offset = 251;
+      limit = 135;
+    } else if (generation === 4) {
+      offset = 386;
+      limit = 107;
+    } else if (generation === 5) {
+      offset = 493;
+      limit = 156;
+    }
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
+      .then(response => response.json())
+      .then(data => setPokemonList(data.results))
+      .catch(error => console.log(error));
+  }, [generation]);
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const handleGenerationChange = (gen: number) => {
+    setGeneration(gen);
+  };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const handlePokemonPress = (pokemon: any) => {
+    // Navega a la vista de detalles del Pokémon
+    navigation.navigate('PokemonsDetails', {pokemon});
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <View style={styles.container}>
+      <View style={styles.generationSelector}>
+        <TouchableOpacity onPress={() => handleGenerationChange(1)}>
+          <Text
+            style={
+              generation === 1
+                ? styles.selectedGenerationText
+                : styles.generationText
+            }>
+            Gen 1
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleGenerationChange(2)}>
+          <Text
+            style={
+              generation === 2
+                ? styles.selectedGenerationText
+                : styles.generationText
+            }>
+            Gen 2
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleGenerationChange(3)}>
+          <Text
+            style={
+              generation === 3
+                ? styles.selectedGenerationText
+                : styles.generationText
+            }>
+            Gen 3
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleGenerationChange(4)}>
+          <Text
+            style={
+              generation === 4
+                ? styles.selectedGenerationText
+                : styles.generationText
+            }>
+            Gen 4
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleGenerationChange(5)}>
+          <Text
+            style={
+              generation === 5
+                ? styles.selectedGenerationText
+                : styles.generationText
+            }>
+            Gen 5
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={pokemonList}
+        keyExtractor={item => item.name}
+        renderItem={({item}) => (
+          <TouchableOpacity onPress={() => handlePokemonPress(item)}>
+            <View style={styles.cardContainer}>
+              <Image
+                source={{
+                  uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`,
+                }}
+                style={styles.pokemonImage}
+              />
+              <Text>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default HomeScreen;
