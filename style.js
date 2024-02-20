@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%', // Extend the card to the width of the screen
+        width: '100%',
     },
     pokemonImage: {
         width: 90,
@@ -42,5 +42,32 @@ export const styles = StyleSheet.create({
     pokemonName: {
         fontSize: 50,
         textAlign: 'center',
+    },
+    detailsContainer: {
+        alignItems: 'center',
+    },
+    detailsText: {
+        marginBottom: 8,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 5,
+        color: '#333',
+    },
+    pokemonImage2: {
+        width: 90,
+        height: 90,
+        paddingTop: 50,
+    },
+    cardDetails: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+        backgroundColor: 'yellow',
     },
 });
