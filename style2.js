@@ -35,11 +35,11 @@ export const styles2 = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#F4CC1C',
         height: 200,
-        flexDirection: 'row', // O 'column' según tus necesidades
-        justifyContent: 'space-around', // Ajusta según tus necesidades
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        borderWidth: 1, // Añade un borde de 1 píxel
-        borderColor: '#365DAA', // Color del borde
+        borderWidth: 1,
+        borderColor: '#365DAA',
     },
 
     pokemonImage2: {
@@ -71,10 +71,10 @@ export const styles2 = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#F4CC1C',
         height: 50,
-        flexDirection: 'row', // O 'column' según tus necesidades
-        justifyContent: 'space-around', // Ajusta según tus necesidades
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        borderWidth: 1, // Añade un borde de 1 píxel
+        borderWidth: 1,
         borderColor: '#365DAA',
         marginTop: 20,
         marginBottom: 20,
@@ -84,10 +84,10 @@ export const styles2 = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#F4CC1C',
         height: 50,
-        flexDirection: 'row', // O 'column' según tus necesidades
-        justifyContent: 'space-around', // Ajusta según tus necesidades
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        borderWidth: 1, // Añade un borde de 1 píxel
+        borderWidth: 1,
         borderColor: '#365DAA',
         marginTop: 20,
         marginBottom: 20,
