@@ -56,7 +56,7 @@ export const styles2 = StyleSheet.create({
 
 
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 23,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
