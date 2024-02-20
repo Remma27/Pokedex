@@ -8,7 +8,7 @@ export const styles2 = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 20,
+        padding: 10,
     },
 
     logoPokemon: {
@@ -50,6 +50,7 @@ export const styles2 = StyleSheet.create({
     texts: {
         flex: 1,
         marginLeft: 10,
+        fontSize: 20,
     },
 
 
@@ -62,7 +63,7 @@ export const styles2 = StyleSheet.create({
     },
 
     detailsText: {
-        fontSize: 16,
+        fontSize: 17,
         marginBottom: 5,
         textAlign: 'center',
     },
@@ -94,14 +95,14 @@ export const styles2 = StyleSheet.create({
     },
 
     Title: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
     },
 
     TitleCard: {
-        fontSize: 20,
+        fontSize: 40,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',

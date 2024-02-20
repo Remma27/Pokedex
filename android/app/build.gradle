@@ -78,8 +78,7 @@ android {
     defaultConfig {
         applicationId "com.pokedex"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        targetSdkVersion rootProject.ext.targetSdkVersionversionCode 1
         versionName "1.0"
     }
     signingConfigs {

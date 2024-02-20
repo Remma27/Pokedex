@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -131,7 +132,9 @@ function Home() {
                 }}
                 style={styles.pokemonImage as StyleProp<ImageStyle>}
               />
-              <Text style={styles.pokemonName}>{item.name}</Text>
+              <Text style={styles.pokemonName}>
+                {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+              </Text>
             </View>
           </TouchableOpacity>
         )}
@@ -212,7 +215,8 @@ function Details({route, navigation}: {route: any; navigation: any}) {
               {/* Texts container for other details */}
               <View style={styles2.texts}>
                 <Text style={styles2.sectionTitle}>{` ${
-                  pokemonDetails.name || 'Not available'
+                  pokemonDetails.name.charAt(0).toUpperCase() +
+                    pokemonDetails.name.slice(1) || 'Not available'
                 }`}</Text>
                 <Text style={styles2.detailsText}>Features:</Text>
                 <Text style={styles2.detailsText}>{`Code: ${
@@ -231,21 +235,41 @@ function Details({route, navigation}: {route: any; navigation: any}) {
             <View style={styles2.types}>
               <Text style={styles2.sectionTitle}>Types to Belong</Text>
             </View>
-            <Text style={styles2.detailsText}>{`${
-              pokemonDetails.types
-                ? pokemonDetails.types.map(type => type.type.name).join(', ')
-                : 'Not available'
-            }`}</Text>
+            <Text style={styles2.detailsText}>
+              {pokemonDetails.types
+                ? pokemonDetails.types.map((type, index) => (
+                    <React.Fragment key={type.type.name}>
+                      <Text>
+                        {type.type.name.charAt(0).toUpperCase() +
+                          type.type.name.slice(1)}
+                      </Text>
+                      {index < pokemonDetails.types.length - 1 && (
+                        <Text>{'\n'}</Text>
+                      )}
+                    </React.Fragment>
+                  ))
+                : 'Not available'}
+            </Text>
 
             {/* Moves information */}
             <View style={styles2.moves}>
               <Text style={styles2.sectionTitle}>Moves</Text>
             </View>
-            <Text style={styles2.detailsText}>{`${
-              pokemonDetails.moves
-                ? pokemonDetails.moves.map(move => move.move.name).join(', ')
-                : 'Not available'
-            }`}</Text>
+            <Text style={styles2.detailsText}>
+              {pokemonDetails.moves
+                ? pokemonDetails.moves.map((move, index) => (
+                    <React.Fragment key={move.move.name}>
+                      <Text>
+                        {move.move.name.charAt(0).toUpperCase() +
+                          move.move.name.slice(1)}
+                      </Text>
+                      {index < pokemonDetails.moves.length - 1 && (
+                        <Text>{'\n'}</Text>
+                      )}
+                    </React.Fragment>
+                  ))
+                : 'Not available'}
+            </Text>
           </View>
         ) : (
           // Displayed if no details are found

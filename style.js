@@ -44,8 +44,6 @@ export const styles = StyleSheet.create({
     pokemonName: {
         textAlign: 'center',
         fontSize: 20,
-        fontStyle: 'italic',
-        fontWeight: 'bold',
         color: '#333',
     },
     detailsContainer: {
